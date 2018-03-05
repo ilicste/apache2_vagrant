@@ -1,22 +1,20 @@
 # apache2_vagrant
-cd to devops/vagrant
-mkdir apache 2
-cd apache 2
-vagrant init -m -f
-nano VAGRANTFILE and paste:
-Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/trusty64"
-  config.vm.network "forwarded_port", guest:80, host:8080, auto_correct: true
-  config.vm.synced_folder ".", "/var/www/html"  
- config.vm.provider "virtualbox" do |vb|
-  vb.memory = "2048"  
- end
-  config.vm.provision "shell", inline: <<-SHELL 
-    sudo apt-get update
-    sudo apt-get install apache2 -y
-    sudo apt-get install mysql-server -y
-    sudo apt-get install php5-mysql -y
-  SHELL
-enda
-ctrl+X -> y -> enter
-vagrant up
+Vorbereitung
+=============
+Damit unser Service laufen kann muss folgendes gemacht werden:
+1.Unter devops/vagrant mit mkdir das Verzeichniss "apache" erstellen.
+2. In das Verzeichniss wechseln mit cd apache
+3. vagrant init -m -f ausführen, damit das Vagrant file generiert wird.
+Die Vorbereitung ist somit zu Ende
+Config
+=============
+Damit die config ins Vagrantfile eingefügt werden kann muss:
+1. Das neu generiete File mit "nano VAGRANTFILE" geöffnet werden
+2. Den Inhalt aus VAGRANTFILE (im github) einfügen
+3. Nano Editor mit ctrl + x dann y und dann enter schliessen.
+Die config wurde von uns erstellt.
+Installation
+==============
+Damit unsere configuration aus dem VAGRANTFILE installiert wird, muss folgendes gemacht werden:
+1. In das Verzeichniss /devops/vagrant/apache wechseln
+2. mit "vagrant up" die installation starten
