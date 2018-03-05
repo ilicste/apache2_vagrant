@@ -1,6 +1,6 @@
 # apache2_vagrant
 Vorbereitung
-=============
+----------
 Damit unser Service laufen kann muss folgendes gemacht werden:
 1.Unter devops/vagrant mit mkdir das Verzeichniss "apache" erstellen.
 2. In das Verzeichniss wechseln mit cd apache
