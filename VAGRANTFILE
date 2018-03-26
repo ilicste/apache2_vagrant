@@ -1,26 +1,25 @@
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/trusty64"
-  config.vm.network "forwarded_port", guest:80, host:8080, auto_correct: true
-  config.vm.synced_folder ".", "/var/www/html"  
- config.vm.provider "virtualbox" do |vb|
-  vb.memory = "2048"  
- end
-  config.vm.provision "shell", inline: <<-SHELL 
-    sudo apt-get update
-    sudo apt-get install apache2 -y
-    sudo apt-get install mysql-server -y
-    sudo apt-get install php5-mysql -y
 
+config.vm.box = "apache"
 
-# In the following example, the sed filter will change the string
-# "monday" to "MON" and the string "sunday" to SUN in html documents
-# before sending to the client.
+config.vm.network "forwarded_port", guest:80, host:8080, 
+auto_correct: true
 
-    <Directory "/var/www/docs/sed"> 
-    AddOutputFilter Sed html 
-    OutputSed "s/monday/MON/g" 
-    OutputSed "s/sunday/SUN/g" 
-    </Directory>
+config.vm.synced_folder ".", "/var/www/html"
+config.vm.provider "virtualbox" do |vb|
 
-  SHELL
-enda
+vb.memory = "512"
+ 
+end
+  
+config.vm.provision "shell", inline: <<-SHELL
+apt-get update
+apt-get install php-common php-zip php-curl php-mysql php-xml
+apt-get install apache2
+sudo debconf-set-selections <<< 'mysql-server 
+mysql-server/root_password password admin'
+sudo debconf-set-selections <<< 'mysql-server 
+mysql-server/root_password_again password admin'
+apt-get install mysql-client mysql-server
+SHELL
+end
